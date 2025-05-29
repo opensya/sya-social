@@ -32,3 +32,8 @@ services:
 
 volumes:
   __VOLUME__-db:
+
+networks:
+  __NETWORK__:
+    driver: bridge
+    external: true

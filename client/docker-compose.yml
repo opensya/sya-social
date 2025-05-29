@@ -11,10 +11,10 @@ services:
       - "${PORT}:${PORT}"
     restart: unless-stopped
     networks:
-      - $NETWORK
+      - __NETWORK__
 
 networks:
-  $NETWORK:
+  __NETWORK__:
     driver: bridge
     external: true
     # driver_opts:
