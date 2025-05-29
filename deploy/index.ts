@@ -1,21 +1,6 @@
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
-import * as net from "net";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import { parseArgs } from "util";
-
-const SERVICE_TEMPLATE = `[Unit]
-Description=$NAME
-After=network.target
-
-[Service]
-WorkingDirectory=$DIR
-ExecStart=/root/.bun/bin/bun run $CMD
-Restart=always
-User=root
-
-[Install]
-WantedBy=multi-user.target
-`;
 
 interface IEnv {
   branch: string;
@@ -55,8 +40,10 @@ interface IEnv {
     try {
       const tempDir = join(process.cwd(), ".tmp", env.code);
 
-      await cloneRepo(tempDir, env);
-      await buildEnvFile(tempDir, env);
+      // await cloneRepo(tempDir, env);
+      // await buildEnvFile(tempDir, env);
+
+      await runCmd(`docker network create -d bridge sya-social-${env.code}`);
 
       // await run(env);
     } catch (error) {
