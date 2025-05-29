@@ -4,8 +4,8 @@ services:
     build:
       context: . # Chemin vers le répertoire contenant votre Dockerfile et le code source
       dockerfile: Dockerfile
-    container_name: tarico-form-v1-api
-    image: tarico-form-v1-api
+    container_name: __CONTAINER_NAME__-api
+    image: __CONTAINER_NAME__-api
     restart: unless-stopped
     ports:
       - "${PORT}:${PORT}"
@@ -24,9 +24,11 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
-      - "${DATABASE_PORT}"
+      - "${DB_PORT}"
     volumes:
-      - form_v1_postgres_data:/var/lib/postgresql/data
+      - __VOLUME__-db:/var/lib/postgresql/data
+    networks:
+      - $NETWORK
 
 volumes:
-  form_v1_postgres_data: # Définit le volume nommé pour la persistance des données
+  __VOLUME__-db:
