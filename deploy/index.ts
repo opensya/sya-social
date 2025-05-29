@@ -55,7 +55,7 @@ interface IEnv {
     try {
       const tempDir = join(process.cwd(), ".tmp", env.code);
 
-      // await cloneRepo(tempDir, env);
+      await cloneRepo(tempDir, env);
       await buildEnvFile(tempDir, env);
 
       // await run(env);
