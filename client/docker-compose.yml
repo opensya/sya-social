@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tarico.site
+    image: tarico.site
+    env_file:
+      - .env
+    ports:
+      - "${DOCKER_EXPOSE}:3000"
+    restart: unless-stopped

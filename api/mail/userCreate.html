@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Votre compte Tarico - SRH est prêt</title>
+  </head>
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f4f4;
+      padding: 20px;
+    "
+  >
+    <div
+      style="
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      "
+    >
+      <h2 style="color: #0056b3; text-align: left">Bonjour {{ name }},</h2>
+
+      <p style="text-align: left">
+        Votre compte sur <strong>Tarico - SRH</strong> a été créé avec succès.
+        Vous pouvez dès à présent vous connecter avec les informations suivantes
+        :
+      </p>
+
+      <ul
+        style="
+          background: #f8f9fa;
+          padding: 15px;
+          border-radius: 5px;
+          list-style-type: none;
+          text-align: left;
+        "
+      >
+        <li><strong>Identifiant :</strong> {{ email }}</li>
+        <li><strong>Mot de passe provisoire :</strong> {{ password }}</li>
+      </ul>
+
+      <p style="text-align: center; margin: 20px 0">
+        <a
+          href="{{ espaceLink }}"
+          style="
+            background: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+          "
+        >
+          Accéder à mon compte
+        </a>
+      </p>
+
+      <p style="text-align: left">
+        <strong
+          >🔒 Pour des raisons de sécurité, nous vous recommandons vivement de
+          modifier votre mot de passe</strong
+        >
+        dès votre première connexion.
+      </p>
+
+      <p style="text-align: left">
+        Une fois connecté, vous aurez accès à toutes les fonctionnalités de
+        votre espace personnel.
+      </p>
+
+      <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0" />
+
+      <p style="text-align: left">
+        Si vous avez des questions ou rencontrez une difficulté, notre équipe
+        est disponible pour vous aider.
+      </p>
+
+      <p style="margin-top: 20px; text-align: left">
+        <strong>Support technique</strong><br />
+        Tarico - SRH<br />
+        <a href="mailto:support@tarico.space" style="color: #0056b3"
+          >support@tarico.space</a
+        >
+      </p>
+    </div>
+  </body>
+</html>

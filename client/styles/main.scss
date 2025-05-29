@@ -1,0 +1,72 @@
+@use "./flaticon";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+html,
+body {
+  overflow: unset !important;
+  background-color: rgba(var(--v-theme-background));
+
+  ::selection {
+    background-color: rgba(var(--v-theme-primary));
+    color: rgb(var(--v-theme-on-primary));
+  }
+
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.v-theme--dark,
+.v-theme--light {
+  --v-border-opacity: 0.07 !important;
+}
+
+svg {
+  fill: currentColor;
+}
+
+i {
+  display: flex;
+}
+
+a {
+  text-decoration: none;
+  color: rgba(var(--v-theme-primary));
+}
+
+.v-btn {
+  text-transform: unset !important;
+}
+
+.text-light {
+  color: rgba(var(--v-theme-on-background));
+}
+
+.skeleton {
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    110deg,
+    rgba(var(--v-theme-surface)) 8%,
+    rgba(var(--v-theme-surface), 0.5) 18%,
+    rgba(var(--v-theme-surface)) 33%
+  );
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+
+  @keyframes shine {
+    to {
+      background-position-x: -200%;
+    }
+  }
+}
+
+.v-field {
+  &.v-field--variant-filled {
+    .v-field__outline {
+      display: none !important;
+    }
+  }
+}

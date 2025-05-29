@@ -1,0 +1,81 @@
+{
+  "site": {
+    "description": "Connecter entreprises et clients par l'innovation digitale."
+  },
+  "words": {
+    "welcome": "bienvenue",
+    "like": "j'aime | j'aimes",
+    "answer": "réponse | réponses",
+    "toanswer": "répondre",
+    "topost": "poster",
+    "cancel": "annuler",
+    "password": "mot de passe",
+    "newPassword": "nouveau mot de passe",
+    "toRepeatPassword": "confirmer le mot de passe",
+    "passwordsNotMatch": "les deux mots de passe ne sont pas identiques",
+    "forgetPassword": "mot de passe oublé",
+    "username": "nom d'utiisateur",
+    "tologin": "s'identifier",
+    "requiredField": "ce champ est requis",
+    "tologout": "se déconnecter",
+    "updateYourProfile": "modifier votre profil",
+    "updateYourPassword": "modifier votre mot de passe",
+    "yourName": "votre nom",
+    "tosave": "enregistrer",
+    "tofollow": "suivre",
+    "followed": "suivi",
+    "inResponsTo": "En réponse à",
+    "toremove": "supprimer",
+    "email": "e-mail",
+    "emailOrUsername": "e-mail ou nom d'Utilisateur",
+    "toregister": "s'inscrire",
+    "createAccount": "créer un compte",
+    "send": "envoyer",
+    "searchUserToFollow": "rechercher des personnes à suivre",
+    "myFollows": "suivis",
+    "tosearch": "rechercher",
+    "preferencies": "préferences",
+    "language": "Langue",
+    "seePost": "Voir le poste",
+    "follower": "abonné | abonés",
+    "following": "abonnement | abonnements",
+    "post": "poste | postes",
+    "responseTo": "répondez à { name }",
+    "postOf": "poste de { name }",
+    "trends": "tendances"
+  },
+
+  "user": {
+    "name": {
+      "min": "02 caractères au minimum",
+      "max": "50 caractères au minimum"
+    }
+  },
+  "post": {
+    "placeholder": "Quoi de neuf ?",
+    "required": "Écrivez quelque chose",
+    "outOfRange": "Longueur maximale dépasée"
+  },
+
+  "error": {
+    "user_not_found": "Utilisateur non trouvé",
+    "post_not_found": "Aucun poste trouvé"
+  },
+
+  "success": {
+    "profile_update": "Les modifications sur votre profil sont bien enregistrées",
+    "password_update": "Votre mot de passwe a bien été modfié. Vous pouvez désormais vous connecter avec le nuveau.",
+    "follow": "Vous êtes maintenant abonné à {name}",
+    "unfollow": "Vous n'êtes plus abonné à {name}",
+    "preferencies_update": "Enregistrées",
+    "request_reset_passeword": "Un e-mail de réinitialisation a été envoyé à votre adresse mail. Si vous ne recevez l'email d'ici un moment, vous pouvez recommencer.",
+    "post_write": "Votre post est publié avecc succès.",
+    "post_removed": "Poste supprimé"
+  },
+
+  "theme": {
+    "dark": "Sombre",
+    "light": "Claire",
+    "default": "Par défaut"
+  }
+}
