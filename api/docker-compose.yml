@@ -1,0 +1,32 @@
+services:
+  # Service de l'application NestJS
+  app:
+    build:
+      context: . # Chemin vers le répertoire contenant votre Dockerfile et le code source
+      dockerfile: Dockerfile
+    container_name: tarico-form-v1-api
+    image: tarico-form-v1-api
+    restart: unless-stopped
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
+    depends_on:
+      - db # Assure que le service de base de données démarre avant l'application
+
+  # Service de la base de données PostgreSQL
+  db:
+    image: postgres:16 # Utilisez une version de Postgres qui vous convient
+    container_name: tarico-form-v1-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DATABASE_PORT}"
+    volumes:
+      - form_v1_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  form_v1_postgres_data: # Définit le volume nommé pour la persistance des données

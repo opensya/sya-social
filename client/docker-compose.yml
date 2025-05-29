@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: tarico.site
-    image: $CONTAINER_NAME
+    container_name: __CONTAINER_NAME__-client
+    image: __CONTAINER_NAME__-client
     env_file:
       - .env
     ports:
