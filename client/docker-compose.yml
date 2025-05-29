@@ -4,9 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: tarico.site
-    image: tarico.site
+    image: $CONTAINER_NAME
     env_file:
       - .env
     ports:
-      - "${DOCKER_EXPOSE}:3000"
+      - "${PORT}:${PORT}"
     restart: unless-stopped
