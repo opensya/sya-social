@@ -159,9 +159,11 @@ async function submit() {
 
 function goBack() {
   const query = { ...route.query };
-  delete query.write;
 
-  Use.router.push({ query, replace: true });
+  if (query.write) {
+    delete query.write;
+    Use.router.push({ query, replace: true });
+  }
 }
 
 function onRecordFinish(audio: IFile) {
@@ -175,7 +177,9 @@ function onRecordFinish(audio: IFile) {
     v-if="Store.session.user && isModalOpen"
     :fullscreen="$vuetify.display.xs"
     :max-width="662"
+    :persistent="loading"
     model-value
+    @update:model-value="(v) => (!v ? goBack() : null)"
   >
     <v-card
       variant="flat"

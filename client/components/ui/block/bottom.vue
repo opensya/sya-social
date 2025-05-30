@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div v-if="Store.session.user" class="ui-bottom border-t pa-5 px-10">
+  <div v-if="Store.session.user" class="ui-bottom border-t pa-5 px-16">
     <router-link
       :to="$localePath({ name: 'index' })"
       :class="{ 'opacity-50': $route.name !== 'index' }"
@@ -10,59 +10,73 @@
       <ui-svg name="home" size="24" />
     </router-link>
 
-    <template v-if="$vuetify.display.smAndDown">
-      <!-- <ui-user-options-modal :user="Store.session.user" /> -->
+    <!-- <ui-user-options-modal :user="Store.session.user" /> -->
 
-      <router-link
-        :to="
-          $localePath({
-            name: '@username',
-            params: { username: Store.session.user.username },
-          })
-        "
-        style="line-height: 1"
-        class="text-dark ml-3"
-      >
-        <ui-user-avatar :user="Store.session.user" size="36" />
-      </router-link>
-    </template>
-
-    <v-spacer />
-
-    <v-btn
-      icon
-      size="small"
-      color="primary"
-      variant="text"
-      @click="
-        $router.push({ query: { write: JSON.stringify({ files: true }) } })
+    <router-link
+      :to="
+        $localePath({
+          name: '@username',
+          params: { username: Store.session.user.username },
+        })
       "
+      style="line-height: 1"
+      class="text-dark"
     >
-      <i class="fi fi-br-picture" style="font-size: 18px"></i>
-    </v-btn>
+      <ui-user-avatar :user="Store.session.user" size="36" />
+    </router-link>
 
-    <v-btn
-      icon
-      size="small"
-      color="primary"
-      variant="text"
-      @click="
-        $router.push({ query: { write: JSON.stringify({ text: true }) } })
-      "
-    >
-      <i class="fi fi-bs-align-center" style="font-size: 18px"></i>
-    </v-btn>
+    <div>
+      <v-speed-dial location="top center" transition="fade-transition">
+        <template v-slot:activator="{ props: activatorProps }">
+          <v-fab v-bind="activatorProps" variant="text" color="primary" icon>
+            <ui-svg name="mic" size="24" />
+          </v-fab>
+        </template>
 
-    <v-btn
-      size="x-small"
-      variant="text"
-      color="primary"
-      icon
-      @click="
-        $router.push({ query: { write: JSON.stringify({ record: true }) } })
-      "
-    >
-      <ui-svg name="mic" size="22" />
+        <v-btn
+          key="audio"
+          size="large"
+          variant="elevated"
+          color="primary"
+          icon
+          @click="
+            $router.push({ query: { write: JSON.stringify({ record: true }) } })
+          "
+        >
+          <ui-svg name="mic" size="24" />
+        </v-btn>
+
+        <v-btn
+          key="text"
+          size="small"
+          color="surface"
+          variant="elevated"
+          class="mx-auto"
+          icon
+          @click="
+            $router.push({ query: { write: JSON.stringify({ text: true }) } })
+          "
+        >
+          <i
+            class="fi fi-bs-symbol"
+            style="font-size: 18px; transform: rotateZ(180deg)"
+          ></i>
+          <!-- <i class="fi fi-bs-align-center" style="font-size: 18px"></i> -->
+        </v-btn>
+      </v-speed-dial>
+    </div>
+
+    <v-badge color="orange" content="soon">
+      <v-btn size="small" variant="text" color="dark" icon>
+        <i class="fi fi-br-waveform-path" style="font-size: 22px"></i>
+      </v-btn>
+    </v-badge>
+
+    <v-btn class="text-none" variant="text" icon disabled>
+      <i class="fi fi-ss-bell" style="font-size: 22px"></i>
+      <!-- <v-badge color="red" content="2">
+        <i class="fi fi-ss-bell" style="font-size: 22px"></i>
+      </v-badge> -->
     </v-btn>
   </div>
 </template>
@@ -79,6 +93,7 @@
   position: sticky;
   display: flex;
   align-items: center;
-  gap: 7px;
+  justify-content: center;
+  gap: 70px;
 }
 </style>

@@ -39,19 +39,6 @@ async function logout() {
 
     <div class="mb-5"></div>
 
-    <v-btn
-      v-if="user.id === Store.session.user?.id"
-      color="primary"
-      variant="flat"
-      rounded
-      @click="$router.push({ query: { write: 'new' } })"
-    >
-      <template #prepend>
-        <i class="fi fi-sr-pen-nib"></i>
-      </template>
-      {{ Lodash.capitalize($t("words.topost")) }}
-    </v-btn>
-
     <ui-user-follow :user="user" />
 
     <v-btn

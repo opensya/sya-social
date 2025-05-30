@@ -94,16 +94,19 @@ async function getUser() {
       <v-btn
         v-if="user.id === Store.session.user?.id"
         color="primary"
-        variant="flat"
-        rounded
-        @click="$router.push({ query: { write: 'new' } })"
+        variant="text"
+        size="x-small"
+        icon
+        :to="
+          $localePath({
+            name: '@username-update-profile',
+            params: { username: user.username },
+          })
+        "
       >
-        <template #prepend>
-          <i class="fi fi-br-plus fi-sr-pen-nib"></i>
-        </template>
-        {{ Lodash.capitalize($t("words.topost")) }}
+        <i class="fi fi-sr-user-pen" style="font-size: 18px"></i>
       </v-btn>
-      <ui-user-follow v-else :user="user" />
+      <ui-user-follow :user="user" />
 
       <ui-user-options-modal :user="user" />
     </div>
