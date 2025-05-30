@@ -105,17 +105,41 @@ interface IEnv {
   }
 
   async function buildDockerFile(tempDir: string, env: IEnv) {
-    let dockerCompose = await Bun.file(
-      join(tempDir, "client/docker-compose.yml")
-    ).text();
-    dockerCompose = dockerCompose
-      .replaceAll("$CONTAINER_NAME", `sya-social-${env.code}-client`)
-      .replaceAll("$NETWORK", `sya-social-${env.code}`);
+    for (const side of ["api", "client"]) {
+      let dockerCompose = await Bun.file(
+        join(tempDir, "client/docker-compose.yml")
+      ).text();
+      dockerCompose = dockerCompose
+        .replaceAll("__CONTAINER_NAME__", `sya-social-${env.code}`)
+        .replaceAll("__NETWORK__", `sya-social-${env.code}`);
 
-    writeFileSync(join(tempDir, "client/docker-compose.yml"), dockerCompose);
+      writeFileSync(join(tempDir, side, "docker-compose.yml"), dockerCompose);
+    }
+
+    await runCmd(`docker compose -p sya-social-${env.code} down`, {
+      cwd: join(tempDir, "api"),
+    });
+    await runCmd(`docker compose -p sya-social-${env.code} up -d --build`, {
+      cwd: join(tempDir, "api"),
+      onStdout(out) {
+        console.log(out);
+      },
+    });
+    await runCmd(`docker compose -p sya-social-${env.code} up -d --build`, {
+      cwd: join(tempDir, "client"),
+      onStdout(out) {
+        console.log(out);
+      },
+    });
+
+    // docker compose -p tarico-form-v1-api up -d --build
+    // await runCmd(`docker compose -p tarico-form-v1-api down`);
   }
 
-  async function runCmd(command: string, options: { cwd?: string } = {}) {
+  async function runCmd(
+    command: string,
+    options: { cwd?: string; onStdout?: (out: string) => void } = {}
+  ) {
     async function readStream(
       stream?: ReadableStream<Uint8Array>
     ): Promise<string> {
@@ -133,6 +157,34 @@ interface IEnv {
       return result;
     }
 
+    async function streamToConsole(
+      stream?: ReadableStream<Uint8Array>,
+      label: "stdout" | "stderr" = "stdout"
+    ) {
+      let result = "";
+      if (!stream) return result;
+
+      const reader = stream.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const text = decoder.decode(value, { stream: true });
+        result += text;
+
+        options.onStdout?.(text);
+
+        // if (label === "stdout") {
+        //   process.stdout.write(text);
+        // } else {
+        //   process.stderr.write(text);
+        // }
+      }
+
+      return result;
+    }
+
     console.log(`▶️ ${command}`);
     const proc = Bun.spawn(["bash", "-c", command], {
       stdout: "pipe",
@@ -140,10 +192,16 @@ interface IEnv {
       cwd: options.cwd,
     });
 
+    // Lecture asynchrone des flux en temps réel
     const [stdout, stderr] = await Promise.all([
-      readStream(proc.stdout),
-      readStream(proc.stderr),
+      streamToConsole(proc.stdout, "stdout"),
+      streamToConsole(proc.stderr, "stderr"),
     ]);
+
+    // const [stdout, stderr] = await Promise.all([
+    //   readStream(proc.stdout),
+    //   readStream(proc.stderr),
+    // ]);
 
     const exitCode = await proc.exited;
 
