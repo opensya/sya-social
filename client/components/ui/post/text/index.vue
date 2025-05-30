@@ -13,10 +13,13 @@ onMounted(() => {
 
   const re = /\#([A-Za-z0-1_]){1,}/gim;
   content.value = props.post.text
-    .replaceAll(re, (e) => {
+    .replace(/#[\p{L}\p{N}_]{0,}/gu, (e) => {
       const id = Lodash.random(100_000, 999_000);
-      const balise = `<span id="htag-${id}" class="ui-post--text__hashtag">${e}</span>`;
-      return balise;
+      return `<span id="htag-${id}" class="ui-post--text__hashtag">${e}</span>`;
+    })
+    .replace(/@[\p{L}\p{N}_]{0,}/gu, (e) => {
+      const id = Lodash.random(100_000, 999_000);
+      return `<span id="htag-${id}" class="ui-post--text__quote">${e}</span>`;
     })
     .replaceAll("\n", "<br/>");
 

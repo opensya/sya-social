@@ -11,6 +11,7 @@ export class AuthService {
       .getRepository(Session)
       .createQueryBuilder("session")
       .leftJoinAndSelect("session.user", "user")
+      .leftJoinAndSelect("user.photo", "photo")
       .where(`session.id = '${token}'`)
       .getOne();
 
