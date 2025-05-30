@@ -120,7 +120,7 @@ interface IEnv {
     await runCmd(`docker compose -p sya-social-${env.code} down`, {
       cwd: join(tempDir, "api"),
     });
-    await runCmd(`docker compose -p sya-social-${env.code} up -d --build`, {
+    await runCmd(`docker compose -p sya-social-${env.code} up --build -d`, {
       cwd: join(tempDir, "api"),
       onStdout(out) {
         console.log(out);
