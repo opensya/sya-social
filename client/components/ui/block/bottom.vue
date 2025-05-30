@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div v-if="Store.session.user" class="ui-bottom border-t pa-5 px-16">
+  <div v-if="Store.session.user" class="ui-bottom border-t pa-5">
     <router-link
       :to="$localePath({ name: 'index' })"
       :class="{ 'opacity-50': $route.name !== 'index' }"
@@ -95,5 +95,10 @@
   align-items: center;
   justify-content: center;
   gap: 70px;
+
+  @media (max-width: 662px) {
+    gap: 30px;
+    justify-content: space-between;
+  }
 }
 </style>

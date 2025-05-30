@@ -15,16 +15,9 @@ onMounted(() => {
           style="width: 100%; max-width: 442px"
           :style="{ height: $vuetify.display.mdAndUp ? '100dvh' : 'unset' }"
         >
-          <div class="my-auto py-16 d-flex flex-column ga-4">
-            <ui-svg name="logo" size="64" classs="text-primary " />
+          <div class="my-auto py-16 d-flex flex-column ga-4 mx-auto">
+            <ui-svg name="logo" size="92" classs="text-primary " />
             <!-- <i class="fi fi-brands-twitter text-primary text-h2"></i> -->
-
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consectetur commodi molestias sit, molestiae nulla, quia illo ex
-              dolorum similique praesentium voluptate tenetur! Quasi esse
-              consectetur dicta a voluptates nesciunt laborum?
-            </p>
           </div>
 
           <div class="mb-5">

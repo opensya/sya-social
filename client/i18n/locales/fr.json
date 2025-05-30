@@ -43,7 +43,8 @@
     "responseTo": "répondez à { name }",
     "postOf": "poste de { name }",
     "trends": "tendances",
-    "nRepost": "resposte | repostes"
+    "nRepost": "resposte | repostes",
+    "tosignin": "se connecter"
   },
 
   "user": {
