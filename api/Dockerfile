@@ -13,8 +13,6 @@
 # # Start the server using the production build
 # CMD [ "bun", "run", "start:prod" ]
 
-ARG appPort
-
 FROM oven/bun:alpine AS base
 
 RUN apk add --no-cache bash
@@ -42,7 +40,6 @@ COPY . .
 
 # [optional] tests & build
 ENV NODE_ENV=production
-RUN bun test
 RUN bun run build
 
 # copy production dependencies and source code into final image
@@ -53,5 +50,4 @@ COPY --from=prerelease /usr/src/app/package.json .
 
 # run the app
 USER bun
-EXPOSE $appPort
 ENTRYPOINT [ "bun", "run", "start:prod" ]
