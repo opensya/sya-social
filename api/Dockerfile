@@ -48,6 +48,9 @@ COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/dist ./dist
 COPY --from=prerelease /usr/src/app/package.json .
 
+# Créer le dossier secrets et en donner l'accès à l'utilisateur bun
+RUN mkdir -p /usr/src/app/secrets && chown -R bun:bun /usr/src/app/secrets
+
 # run the app
 USER bun
 ENTRYPOINT [ "bun", "run", "start:prod" ]
