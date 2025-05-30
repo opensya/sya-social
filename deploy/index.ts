@@ -120,12 +120,27 @@ interface IEnv {
     await runCmd(`docker compose -p sya-social-${env.code} down`, {
       cwd: join(tempDir, "api"),
     });
-    await runCmd(`docker compose -p sya-social-${env.code} up --build -d`, {
-      cwd: join(tempDir, "api"),
-      onStdout(out) {
-        console.log(out);
-      },
-    });
+    // await runCmd(`docker compose build --no-cache`, {
+    //   cwd: join(tempDir, "api"),
+    // });
+
+    await runCmd(
+      `docker compose -p sya-social-${env.code} up --build --force-recreate -d`,
+      {
+        cwd: join(tempDir, "api"),
+        onStdout: (out) => console.log(out),
+      }
+    );
+
+    // await runCmd(
+    //   `docker compose -p sya-social-${env.code} up --build --no-cache -d`,
+    //   {
+    //     cwd: join(tempDir, "api"),
+    //     onStdout(out) {
+    //       console.log(out);
+    //     },
+    //   }
+    // );
     // await runCmd(`docker compose -p sya-social-${env.code} up -d --build`, {
     //   cwd: join(tempDir, "client"),
     //   onStdout(out) {
