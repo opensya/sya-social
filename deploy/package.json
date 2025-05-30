@@ -1,5 +1,5 @@
 {
-  "name": "deploy",
+  "name": "sya-social-deploy",
   "module": "index.ts",
   "devDependencies": {
     "@types/bun": "latest"

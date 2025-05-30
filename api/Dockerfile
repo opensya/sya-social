@@ -7,7 +7,7 @@ COPY ./bun.lock ./bun.lock
 COPY ./package.json ./package.json
 
 # Installer uniquement les dépendances de production
-RUN bun install --production
+RUN bun install --frozen-lockfile --production
 
 # Start the server using the production build
 CMD [ "bun", "run", "start:prod" ]
