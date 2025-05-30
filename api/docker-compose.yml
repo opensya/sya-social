@@ -12,7 +12,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - db # Assure que le service de base de données démarre avant l'application
+      - db
+      - meilisearch
     networks:
       - __NETWORK__
 
@@ -31,9 +32,19 @@ services:
       - __VOLUME__-db:/var/lib/postgresql/data
     networks:
       - __NETWORK__
+  meilisearch:
+    image: "getmeili/meilisearch:v0.26.1"
+    restart: unless-stopped
+    ports:
+      - "${MEILISEARCH_PORT}:7700"
+    volumes:
+      - __VOLUME__-meili:/meili_data
+    environment:
+      - MEILI_MASTER_KEY=${MEILISEARCH_API_KEY}
 
 volumes:
   __VOLUME__-db:
+  __VOLUME__-meili:
 
 networks:
   __NETWORK__:
