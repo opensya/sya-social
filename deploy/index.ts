@@ -19,6 +19,7 @@ interface IEnv {
   env: {
     DB_NAME: string;
     DB_PASSWORD: string;
+    [key: string]: any;
   };
 }
 
@@ -86,6 +87,7 @@ interface IEnv {
     apiEnvFileContent += `DB_USER="postgres"\n`;
     apiEnvFileContent += `DB_HOST="db"\n`;
     apiEnvFileContent += `DB_PORT=5432\n`;
+    apiEnvFileContent += `MEILISEARCH_HOST="http://meilisearch:7700"\n`;
 
     writeFileSync(`${tempDir}/api/.env`, apiEnvFileContent);
 

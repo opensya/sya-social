@@ -41,6 +41,8 @@ services:
       - __VOLUME__-meili:/meili_data
     environment:
       - MEILI_MASTER_KEY=${MEILISEARCH_API_KEY}
+    networks:
+      - __NETWORK__
 
 volumes:
   __VOLUME__-db:
