@@ -13,6 +13,8 @@ services:
       - .env
     depends_on:
       - db # Assure que le service de base de données démarre avant l'application
+    networks:
+      - __NETWORK__
 
   # Service de la base de données PostgreSQL
   db:
@@ -28,7 +30,7 @@ services:
     volumes:
       - __VOLUME__-db:/var/lib/postgresql/data
     networks:
-      - $NETWORK
+      - __NETWORK__
 
 volumes:
   __VOLUME__-db:
