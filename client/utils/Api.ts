@@ -142,7 +142,8 @@ export default {
         return data;
       };
 
-      const apiUrl = "http://localhost:22300";
+      const config = useRuntimeConfig();
+      const apiUrl = config.public.apiUrl;
       const sessionId = Store.session.sessionId;
 
       fetch(`${apiUrl}/${params.url}`, {

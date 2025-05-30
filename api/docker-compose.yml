@@ -1,0 +1,55 @@
+services:
+  # Service de l'application NestJS
+  app:
+    build:
+      context: . # Chemin vers le répertoire contenant votre Dockerfile et le code source
+      dockerfile: Dockerfile
+    container_name: __CONTAINER_NAME__-api
+    image: __CONTAINER_NAME__-api
+    restart: unless-stopped
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - meilisearch
+    networks:
+      - __NETWORK__
+
+  # Service de la base de données PostgreSQL
+  db:
+    image: postgres:16 # Utilisez une version de Postgres qui vous convient
+    container_name: __CONTAINER_NAME__-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}"
+    volumes:
+      - __VOLUME__-db:/var/lib/postgresql/data
+    networks:
+      - __NETWORK__
+  meilisearch:
+    image: "getmeili/meilisearch:latest"
+    restart: unless-stopped
+    container_name: __CONTAINER_NAME__-meili
+    ports:
+      - "${MEILISEARCH_PORT}:7700"
+    volumes:
+      - __VOLUME__-meili:/meili_data
+    environment:
+      - MEILI_MASTER_KEY=${MEILISEARCH_API_KEY}
+    networks:
+      - __NETWORK__
+
+volumes:
+  __VOLUME__-db:
+  __VOLUME__-meili:
+
+networks:
+  __NETWORK__:
+    driver: bridge
+    external: true

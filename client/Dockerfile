@@ -31,5 +31,7 @@ COPY --from=builder /app/package.json ./package.json
 # Installer uniquement les dépendances de production
 RUN bun install --production
 
+EXPOSE ${PORT}
+
 # Démarrer Nuxt
 CMD ["bun", "./.output/server/index.mjs"]

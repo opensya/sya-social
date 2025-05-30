@@ -3,10 +3,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: tarico.site
-    image: tarico.site
+    container_name: __CONTAINER_NAME__-client
+    image: __CONTAINER_NAME__-client
     env_file:
       - .env
     ports:
-      - "${DOCKER_EXPOSE}:3000"
+      - "${PORT}:${PORT}"
     restart: unless-stopped
+    networks:
+      - __NETWORK__
+
+networks:
+  __NETWORK__:
+    driver: bridge
+    external: true

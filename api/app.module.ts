@@ -12,10 +12,6 @@ import { SessionModule } from "modules/session/session.module";
 import { UserModule } from "modules/user/user.module";
 import { PostModule } from "modules/post/post.module";
 import entitys from "database/entitys";
-import mock from "utils/mock";
-import { User } from "database/entitys/User";
-import { Post } from "database/entitys/Post";
-import { v4 as uuid } from "uuid";
 
 @Module({
   imports: [
@@ -89,8 +85,6 @@ export class AppModule implements OnApplicationBootstrap {
       path: "/experimental-features/",
       body: { containsFilter: true },
     });
-
-    console.log(await Meili.index("posts").getFilterableAttributes());
 
     // const posts = await this.dataSource
     //   .getRepository(Post)

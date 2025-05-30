@@ -25,7 +25,7 @@ async function bootstrap() {
   await createDatabaseIfNotExists();
 
   global.Meili = new MeiliSearch({
-    host: `http://127.0.0.1:${process.env.MEILISEARCH_PORT}`,
+    host: process.env.MEILISEARCH_HOST,
     apiKey: process.env.MEILISEARCH_API_KEY,
   });
 
