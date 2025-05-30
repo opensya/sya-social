@@ -16,8 +16,6 @@ services:
       - meilisearch
     networks:
       - __NETWORK__
-    volumes:
-      - ./vol:/usr/src/app
 
   # Service de la base de données PostgreSQL
   db:
