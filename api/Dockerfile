@@ -6,7 +6,6 @@ WORKDIR /app
 COPY ./dist ./dist
 COPY ./bun.lock ./bun.lock
 COPY ./package.json ./package.json
-COPY ./assets ./assets
 
 # Installer uniquement les dépendances de production
 RUN bun install --production
