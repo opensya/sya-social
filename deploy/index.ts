@@ -84,7 +84,7 @@ interface IEnv {
     apiEnvFileContent += `PORT=${env.ports.api}\n`;
 
     apiEnvFileContent += `DB_USER="postgres"\n`;
-    apiEnvFileContent += `DB_HOST="sya-social-${env.code}"\n`;
+    apiEnvFileContent += `DB_HOST="db"\n`;
     apiEnvFileContent += `DB_PORT=5432\n`;
 
     writeFileSync(`${tempDir}/api/.env`, apiEnvFileContent);
