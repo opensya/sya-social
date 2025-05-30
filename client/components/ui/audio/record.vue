@@ -81,7 +81,7 @@ function onFinish($audio: IFile | "abort", duration: number) {
       <ui-svg name="mic" size="22" />
     </v-btn>
     <template v-else>
-      <v-btn
+      <!-- <v-btn
         size="x-small"
         variant="tonal"
         color="dark"
@@ -95,7 +95,7 @@ function onFinish($audio: IFile | "abort", duration: number) {
           style="font-size: 16px"
         ></i>
         <i v-else class="fi fi-sr-play" style="font-size: 16px"></i>
-      </v-btn>
+      </v-btn> -->
       <v-btn
         size="x-small"
         variant="tonal"

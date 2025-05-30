@@ -211,6 +211,7 @@ export class UserService {
       await this.dataSource
         .getRepository(Follow)
         .createQueryBuilder("follow")
+
         .leftJoinAndSelect("follow.me", "follow_me")
         .leftJoinAndSelect("follow_me.photo", "follow_me_photo")
 
@@ -220,40 +221,45 @@ export class UserService {
         .where(`follow_me.id = '${user.id}'`)
         .getMany()
     ).map((follow) => `'${follow.follow.id}'`);
-    follows.push(`'${user.id}'`);
 
-    const result = await Meili.index("users").search<User>(
-      (this.request.query.q as string) ?? null,
-      {
-        filter: [`id NOT IN [${follows.join(",")}]`],
-        page: pagination.page,
-        hitsPerPage: pagination.pageSize,
-      },
-    );
+    follows.push(`'${user.id}'`);
 
     const queryBuilder = this.dataSource
       .getRepository(User)
       .createQueryBuilder("user")
-      .andWhere(
-        `user.id IN (${result.hits.map((user) => `'${user.id}'`).join(",")})`,
+      .leftJoinAndSelect("user.photo", "photo")
+      .andWhere(`user.id NOT IN (${follows.join(",")})`)
+      .skip((pagination.pageSize - 1) * pagination.page)
+      .take(pagination.pageSize);
+
+    if (this.request.query.q) {
+      const result = await Meili.index("users").search<User>(
+        (this.request.query.q as string) ?? null,
+        {
+          filter: [`id NOT IN [${follows.join(",")}]`],
+          page: pagination.page,
+          hitsPerPage: pagination.pageSize,
+        },
       );
 
-    let users: User[] = [];
-
-    if (result.hits.length) {
-      users = await queryBuilder.getMany();
-
-      for (let i = 0; i < users.length; i++) {
-        delete users[i].password;
+      if (result.hits.length) {
+        queryBuilder.andWhere(
+          `user.id IN (${result.hits.map((user) => `'${user.id}'`).join(",")})`,
+        );
       }
+    }
+
+    const [users, total] = await queryBuilder.getManyAndCount();
+
+    for (let i = 0; i < users.length; i++) {
+      delete users[i].password;
     }
 
     return {
       ...pagination,
-      ...result,
       data: users,
-      total: result.totalHits,
-      totalPages: result.totalPages,
+      total,
+      totalPages: Math.ceil(total / pagination.pageSize),
     };
   }
 
