@@ -5,10 +5,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      appName: process.env.NUXT_APP_NAME,
-      apiUrl: process.env.NUXT_API_URL,
-
-      directus: { url: "" },
+      apiUrl: process.env.NUXT_PUBLIC_API_URL,
     },
   },
 

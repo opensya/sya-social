@@ -17,5 +17,3 @@ networks:
   __NETWORK__:
     driver: bridge
     external: true
-    # driver_opts:
-    #   com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
