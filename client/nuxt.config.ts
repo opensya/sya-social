@@ -24,7 +24,6 @@ export default defineNuxtConfig({
     "dayjs-nuxt",
     "nuxt-svgo",
     "nuxt-echarts",
-    "@nuxt/content",
   ],
 
   plugins: [],

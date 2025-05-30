@@ -45,8 +45,6 @@ interface IEnv {
       await buildEnvFile(tempDir, env);
       await createNetwork(env);
       await buildDockerFile(tempDir, env);
-
-      // await run(env);
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +105,7 @@ interface IEnv {
   }
 
   async function buildDockerFile(tempDir: string, env: IEnv) {
-    for (const side of ["api"]) {
+    for (const side of ["api", "client"]) {
       let dockerCompose = await Bun.file(
         join(tempDir, side, "docker-compose.yml")
       ).text();
@@ -122,36 +120,15 @@ interface IEnv {
     await runCmd(`docker compose -p sya-social-${env.code} down`, {
       cwd: join(tempDir, "api"),
     });
-    // await runCmd(`docker compose build --no-cache`, {
-    //   cwd: join(tempDir, "api"),
-    // });
 
     await runCmd(
       `docker compose -p sya-social-${env.code} up --build --force-recreate -d`,
-      {
-        cwd: join(tempDir, "api"),
-        onStdout: (out) => console.log(out),
-      }
+      { cwd: join(tempDir, "api"), onStdout: (out) => console.log(out) }
     );
-
-    // await runCmd(
-    //   `docker compose -p sya-social-${env.code} up --build --no-cache -d`,
-    //   {
-    //     cwd: join(tempDir, "api"),
-    //     onStdout(out) {
-    //       console.log(out);
-    //     },
-    //   }
-    // );
-    // await runCmd(`docker compose -p sya-social-${env.code} up -d --build`, {
-    //   cwd: join(tempDir, "client"),
-    //   onStdout(out) {
-    //     console.log(out);
-    //   },
-    // });
-
-    // docker compose -p tarico-form-v1-api up -d --build
-    // await runCmd(`docker compose -p tarico-form-v1-api down`);
+    await runCmd(
+      `docker compose -p sya-social-${env.code} up --build --force-recreate -d`,
+      { cwd: join(tempDir, "client"), onStdout: (out) => console.log(out) }
+    );
   }
 
   async function runCmd(
