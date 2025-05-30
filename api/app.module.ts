@@ -86,8 +86,6 @@ export class AppModule implements OnApplicationBootstrap {
       body: { containsFilter: true },
     });
 
-    console.log(await Meili.index("posts").getFilterableAttributes());
-
     // const posts = await this.dataSource
     //   .getRepository(Post)
     //   .createQueryBuilder("post")
