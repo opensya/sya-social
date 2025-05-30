@@ -117,18 +117,18 @@ interface IEnv {
       writeFileSync(join(tempDir, side, "docker-compose.yml"), dockerCompose);
     }
 
-    await runCmd(`docker compose -p sya-social-${env.code} down`, {
-      cwd: join(tempDir, "api"),
-    });
+    // await runCmd(`docker compose -p sya-social-${env.code} down`, {
+    //   cwd: join(tempDir, "api"),
+    // });
 
-    await runCmd(
-      `docker compose -p sya-social-${env.code} up --build --force-recreate -d`,
-      { cwd: join(tempDir, "api"), onStdout: (out) => console.log(out) }
-    );
-    await runCmd(
-      `docker compose -p sya-social-${env.code} up --build --force-recreate -d`,
-      { cwd: join(tempDir, "client"), onStdout: (out) => console.log(out) }
-    );
+    await runCmd(`docker compose up --build --force-recreate -d`, {
+      cwd: join(tempDir, "api"),
+      onStdout: (out) => console.log(out),
+    });
+    await runCmd(`docker compose up --build --force-recreate -d`, {
+      cwd: join(tempDir, "client"),
+      onStdout: (out) => console.log(out),
+    });
   }
 
   async function runCmd(

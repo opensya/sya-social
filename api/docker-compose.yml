@@ -20,7 +20,7 @@ services:
   # Service de la base de données PostgreSQL
   db:
     image: postgres:16 # Utilisez une version de Postgres qui vous convient
-    container_name: tarico-form-v1-db
+    container_name: __CONTAINER_NAME__-db
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -35,6 +35,7 @@ services:
   meilisearch:
     image: "getmeili/meilisearch:latest"
     restart: unless-stopped
+    container_name: __CONTAINER_NAME__-meili
     ports:
       - "${MEILISEARCH_PORT}:7700"
     volumes:
