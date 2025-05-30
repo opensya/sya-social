@@ -4,6 +4,5 @@ import { Fyle } from "./Fyle";
 import { Post } from "./Post";
 import { Session } from "./Session";
 import { User } from "./User";
-import { ValidationCode } from "./ValidationCode";
 
-export default [Fyle, User, Session, ValidationCode, Follow, Post, Attachment];
+export default [Fyle, User, Session, Follow, Post, Attachment];
