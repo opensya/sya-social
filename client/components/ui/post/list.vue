@@ -118,17 +118,7 @@ function remove(post: IPost) {
           </div>
 
           <div style="z-index: 1; position: relative">
-            <v-btn
-              color="dark"
-              variant="text"
-              icon
-              :to="$localePath({ name: 'post-id', params: { id: post.id } })"
-            >
-              <i
-                class="fi fi-sr-arrows-retweet opacity-50"
-                style="font-size: 16px"
-              ></i>
-            </v-btn>
+            <ui-post-repost :post="post" />
           </div>
         </div>
       </ui-post-block>

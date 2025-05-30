@@ -56,13 +56,6 @@ export class AppModule implements OnApplicationBootstrap {
       "id",
       "createdAt",
       "text",
-      // {
-      //   attributePatterns: ["text"],
-      //   features: {
-      //     facetSearch: true,
-      //     filter: { equality: true, comparison: true },
-      //   },
-      // },
       "user.id",
       "response.id",
       "hashtags",

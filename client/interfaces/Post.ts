@@ -13,6 +13,7 @@ export interface IPost {
 
   response?: IPost;
   nResponse: number;
+  nRepost: number;
 }
 
 export interface IHastag {

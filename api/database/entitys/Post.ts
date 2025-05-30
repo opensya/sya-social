@@ -42,6 +42,10 @@ export class Post extends Base {
   @OneToMany(() => Post, (post) => post.response, {})
   responses: Post[];
 
+  @Column({ type: "boolean", default: false })
+  repost: boolean;
+
   nResponse: number;
+  nRepost: number;
   hashtags: string[];
 }

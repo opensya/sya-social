@@ -24,6 +24,10 @@ export class PostController {
   async add() {
     return await this.service.add();
   }
+  @Post("/repost")
+  async repost() {
+    return await this.service.repost();
+  }
 
   @Delete("/:id")
   async remove() {

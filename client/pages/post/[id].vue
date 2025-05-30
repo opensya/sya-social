@@ -81,6 +81,12 @@ async function getPost() {
         <div class="px-5 py-3 d-flex align-center ga-2">
           <i class="fi fi-sr-message-quote text-primary"></i>
           {{ post.nResponse }} {{ $t("words.answer", post.nResponse) }}
+
+          <i
+            class="fi fi-sr-arrows-retweet text-primary"
+            style="font-size: 16px"
+          ></i>
+          {{ post.nRepost }} {{ $t("words.nRepost", post.nRepost) }}
         </div>
 
         <div class="border-t">

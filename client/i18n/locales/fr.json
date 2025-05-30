@@ -42,7 +42,8 @@
     "post": "poste | postes",
     "responseTo": "répondez à { name }",
     "postOf": "poste de { name }",
-    "trends": "tendances"
+    "trends": "tendances",
+    "nRepost": "resposte | repostes"
   },
 
   "user": {
@@ -70,7 +71,8 @@
     "preferencies_update": "Enregistrées",
     "request_reset_passeword": "Un e-mail de réinitialisation a été envoyé à votre adresse mail. Si vous ne recevez l'email d'ici un moment, vous pouvez recommencer.",
     "post_write": "Votre post est publié avecc succès.",
-    "post_removed": "Poste supprimé"
+    "post_removed": "Poste supprimé",
+    "post_repost": "Reposté."
   },
 
   "theme": {

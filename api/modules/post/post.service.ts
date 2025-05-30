@@ -137,13 +137,22 @@ export class PostService {
       delete posts[i].user.password;
       delete posts[i].response?.user.password;
 
-      posts[i].nResponse = await this.dataSource
+      const reposnes = await this.dataSource
         .getRepository(Post)
-
         .createQueryBuilder("post")
         .leftJoinAndSelect("post.response", "response")
+        .leftJoinAndSelect("post.audio", "audio")
+        .leftJoinAndSelect("post.files", "files")
         .where(`response.id = '${posts[i].id}'`)
-        .getCount();
+        .getMany();
+
+      posts[i].nResponse = reposnes.filter(
+        (post) => post.text ?? post.audio ?? post.files.length,
+      ).length;
+
+      posts[i].nRepost = reposnes.filter(
+        (post) => !post.text && !post.audio && !post.files.length,
+      ).length;
     }
 
     return posts;
@@ -213,6 +222,46 @@ export class PostService {
 
     await this.dataSource.manager.save(post);
 
+    const fill = (await this.fill([post]))[0];
+    await this.saveInMeili(fill);
+
+    return fill;
+  }
+
+  async repost() {
+    const params = this.request.body as {
+      text: string;
+      files: Attachment[];
+      audio: Attachment;
+    };
+    const user = this.request.session.user as User;
+
+    const post = new Post();
+    post.user = user;
+
+    if (!this.request.body.response) {
+      throw new NotFoundException("post_not_found");
+    }
+
+    const _post = await this.dataSource
+      .getRepository(Post)
+      .createQueryBuilder("post")
+      .leftJoinAndSelect("post.user", "user")
+      .andWhere(`post.id = '${this.request.body.response}'`)
+      .getOne();
+
+    if (!_post) throw new NotFoundException("post_not_found");
+    post.response = _post;
+
+    await this.dataSource.manager.save(post);
+
+    const fill = (await this.fill([post]))[0];
+    await this.saveInMeili(fill);
+
+    return fill;
+  }
+
+  private async saveInMeili(post: Post) {
     function extraireHashtags(text: string) {
       const regex = /#[\p{L}\p{N}_]+/gu;
       const hashtags = [];
@@ -234,9 +283,6 @@ export class PostService {
     delete post.response?.audio;
     delete post.response?.files;
     delete post.response?.user.photo;
-
-    const fill = (await this.fill([post]))[0];
-    await Meili.index("posts").addDocuments([fill]);
 
     const re = /\#([A-Za-z0-1_]){1,}/gim;
     const matchies = post.text.match(re);
@@ -277,8 +323,6 @@ export class PostService {
         ]);
       }
     }
-
-    return fill;
   }
 
   async getHashtag() {
