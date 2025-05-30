@@ -75,7 +75,10 @@ async function getPost() {
   post.value = undefined;
   isModalOpen.value = false;
 
-  if (!route.query.write) return;
+  if (!route.query.write) {
+    data.value = { text: "", files: [] };
+    return;
+  }
 
   if (route.query.write !== "new") {
     const params = JSON.parse(route.query.write as string);
