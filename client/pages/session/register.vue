@@ -60,7 +60,7 @@ async function submit() {
           v-model="data.name"
         ></v-text-field>
 
-        <v-text-field
+        <!-- <v-text-field
           :label="Lodash.capitalize($t('words.email'))"
           :rules="[
             (v) => (!v ? Lodash.capitalize($t('words.requiredField')) : true),
@@ -68,7 +68,7 @@ async function submit() {
           variant="filled"
           type="email"
           v-model="data.email"
-        ></v-text-field>
+        ></v-text-field> -->
 
         <v-text-field
           :label="Lodash.capitalize($t('words.password'))"

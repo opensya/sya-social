@@ -62,13 +62,15 @@ export class SessionService {
 
     if (u) throw new BadRequestException("username_is_already_taken");
 
-    const uEmail = await this.dataSource
-      .getRepository(User)
-      .createQueryBuilder("user")
-      .where(`email = '${params.email}'`)
-      .getOne();
-    if (uEmail) {
-      throw new BadRequestException("user_with_this_email_alredy_exists");
+    if (params.email) {
+      const uEmail = await this.dataSource
+        .getRepository(User)
+        .createQueryBuilder("user")
+        .where(`email = '${params.email}'`)
+        .getOne();
+      if (uEmail) {
+        throw new BadRequestException("user_with_this_email_alredy_exists");
+      }
     }
 
     const user = new User();
