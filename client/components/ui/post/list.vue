@@ -113,7 +113,11 @@ function remove(post: IPost) {
                 ></i>
               </template>
 
-              {{ post.nResponse }} {{ $t("words.answer", post.nResponse) }}
+              {{ post.nResponse }}
+
+              <span v-if="!$vuetify.display.xs">
+                {{ Lodash.capitalize($t("words.answer", post.nResponse)) }}
+              </span>
             </v-btn>
           </div>
 
