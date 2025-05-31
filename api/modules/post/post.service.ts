@@ -39,6 +39,7 @@ export class PostService {
 
       .leftJoinAndSelect("post.response", "response")
       .leftJoinAndSelect("response.user", "response_user")
+      .leftJoinAndSelect("response_user.photo", "response_user_photo")
       .leftJoinAndSelect("response.audio", "response_audio")
       .leftJoinAndSelect("response.files", "response_files")
 
@@ -116,6 +117,7 @@ export class PostService {
 
       .leftJoinAndSelect("post.response", "response")
       .leftJoinAndSelect("response.user", "response_user")
+      .leftJoinAndSelect("response_user.photo", "response_user_photo")
       .leftJoinAndSelect("response.audio", "response_audio")
       .leftJoinAndSelect("response.files", "response_files")
 
