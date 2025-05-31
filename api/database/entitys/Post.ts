@@ -13,6 +13,9 @@ import { Attachment } from "./Attachment";
 
 @Entity()
 export class Post extends Base {
+  @Column({ type: "uuid", unique: true, nullable: true })
+  shareID: string;
+
   @IsOptional()
   @IsString({ message: "post_text_not_valid" })
   @Column({ type: "text", default: "" })

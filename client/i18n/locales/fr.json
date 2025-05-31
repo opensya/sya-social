@@ -44,7 +44,11 @@
     "postOf": "poste de { name }",
     "trends": "tendances",
     "nRepost": "resposte | repostes",
-    "tosignin": "se connecter"
+    "tosignin": "se connecter",
+    "copyLink": "copier le lien",
+    "toshare": "partager",
+    "todownload": "télécharger",
+    "integrate": "intégrer"
   },
 
   "user": {
@@ -73,7 +77,8 @@
     "request_reset_passeword": "Un e-mail de réinitialisation a été envoyé à votre adresse mail. Si vous ne recevez l'email d'ici un moment, vous pouvez recommencer.",
     "post_write": "Votre post est publié avecc succès.",
     "post_removed": "Poste supprimé",
-    "post_repost": "Reposté."
+    "post_repost": "Reposté.",
+    "copy": "Copié"
   },
 
   "theme": {

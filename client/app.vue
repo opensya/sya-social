@@ -25,6 +25,7 @@ function test(params: any) {}
       </template>
 
       <ui-notify />
+      <ui-share />
     </v-app>
   </NuxtLayout>
 </template>

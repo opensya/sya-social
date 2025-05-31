@@ -7,7 +7,7 @@ defineProps({
 
 <template>
   <v-app>
-    <div class="ui-block d-flex mx-auto">
+    <div class="ui-block d-flex justify-center mx-auto">
       <template v-if="!hideLeft">
         <template v-if="$vuetify.display.mdAndUp">
           <div class="ui-block__left mr-5 ml-10" style="">
@@ -19,9 +19,10 @@ defineProps({
               />
             </template>
           </div>
-          <div class="line"></div>
         </template>
       </template>
+
+      <div v-if="$vuetify.display.mdAndUp" class="line"></div>
 
       <div
         class="ui-block__middle"
@@ -31,7 +32,7 @@ defineProps({
           <slot />
         </div>
 
-        <ui-block-bottom v-if="!$slots.bottom" />
+        <ui-block-bottom v-if="!$slots.bottom && Store.session.user" />
         <slot name="bottom"> </slot>
       </div>
       <div v-if="$vuetify.display.mdAndUp" class="line"></div>

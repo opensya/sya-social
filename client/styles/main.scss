@@ -70,3 +70,12 @@ a {
     }
   }
 }
+
+.v-snackbar .v-overlay__content {
+  min-width: unset;
+  width: max-content;
+
+  .v-snackbar__content {
+    width: max-content;
+  }
+}

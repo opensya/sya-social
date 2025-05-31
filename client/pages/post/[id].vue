@@ -87,6 +87,10 @@ async function getPost() {
             style="font-size: 16px"
           ></i>
           {{ post.nRepost }} {{ $t("words.nRepost", post.nRepost) }}
+
+          <v-spacer />
+
+          <ui-post-share :post="post" />
         </div>
 
         <div class="border-t">

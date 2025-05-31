@@ -49,6 +49,52 @@ export class PostService {
     return (await this.fill([post]))[0];
   }
 
+  async share() {
+    const id = this.request.params.id;
+    const post = await this.dataSource
+      .getRepository(Post)
+      .createQueryBuilder("post")
+
+      .leftJoinAndSelect("post.user", "user")
+      .leftJoinAndSelect("user.photo", "photo")
+
+      .leftJoinAndSelect("post.audio", "audio")
+      .leftJoinAndSelect("post.files", "files")
+
+      .andWhere(`post.id = '${id}'`)
+      .getOne();
+
+    if (!post) throw new BadRequestException("post_not_found");
+
+    return (await this.fill([post]))[0];
+  }
+  async addShare() {
+    const user = this.request.session.user as User;
+    const post = await this.get();
+
+    if (post.user.id !== user.id) {
+      throw new UnauthorizedException("not_authoriezd");
+    }
+
+    post.shareID = uuid();
+    await post.save();
+
+    return (await this.fill([post]))[0];
+  }
+  async removeShare() {
+    const user = this.request.session.user as User;
+    const post = await this.get();
+
+    if (post.user.id !== user.id) {
+      throw new UnauthorizedException("not_authoriezd");
+    }
+
+    post.shareID = null;
+    await post.save();
+
+    return (await this.fill([post]))[0];
+  }
+
   async list() {
     const user = this.request.session.user as User;
 
@@ -133,9 +179,14 @@ export class PostService {
   }
 
   private async fill(posts: Post[]) {
+    const user = this.request.session.user as User;
+
     for (let i = 0; i < posts.length; i++) {
       delete posts[i].user.password;
       delete posts[i].response?.user.password;
+
+      delete posts[i].response?.shareID;
+      if (user?.id !== posts[i].user.id) delete posts[i].shareID;
 
       const reposnes = await this.dataSource
         .getRepository(Post)

@@ -12,6 +12,7 @@ const follow = ref<IFollow>();
 const loading = ref(false);
 
 onMounted(async () => {
+  if (!Store.session.user) return;
   if (props.user.id === Store.session.user?.id) return;
 
   try {
@@ -90,7 +91,7 @@ const submit = {
 </script>
 
 <template>
-  <template v-if="user.id !== Store.session.user?.id">
+  <template v-if="Store.session.user && user.id !== Store.session.user?.id">
     <v-btn
       v-if="!follow"
       color="primary"

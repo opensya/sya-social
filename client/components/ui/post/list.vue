@@ -117,8 +117,12 @@ function remove(post: IPost) {
             </v-btn>
           </div>
 
-          <div style="z-index: 1; position: relative">
+          <div
+            style="z-index: 1; position: relative"
+            class="d-flex align-center justify-center ga-2"
+          >
             <ui-post-repost :post="post" />
+            <ui-post-share :post="post" />
           </div>
         </div>
       </ui-post-block>

@@ -1,5 +1,6 @@
 import { Controller, Delete, Get, Inject, Post } from "@nestjs/common";
 import { PostService } from "./post.service";
+import { DontNeedSession, Public } from "interceptors/public";
 
 @Controller({ path: "/post" })
 export class PostController {
@@ -13,6 +14,21 @@ export class PostController {
   @Get("/:id")
   async get() {
     return await this.service.get();
+  }
+
+  @Public()
+  @DontNeedSession()
+  @Get("/share/:id")
+  async share() {
+    return await this.service.share();
+  }
+  @Post("/share/:id")
+  async addShare() {
+    return await this.service.addShare();
+  }
+  @Delete("/share/:id")
+  async removeShare() {
+    return await this.service.removeShare();
   }
 
   @Get("/")
