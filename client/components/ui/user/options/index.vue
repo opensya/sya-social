@@ -97,18 +97,7 @@ async function logout() {
       {{ Lodash.capitalize($t("words.following", 2)) }}
     </v-btn>
 
-    <v-btn
-      color="dark"
-      variant="text"
-      size="large"
-      rounded
-      :to="
-        $localePath({
-          name: '@username-follow',
-          params: { username: user.username },
-        })
-      "
-    >
+    <v-btn color="dark" variant="text" size="large" rounded>
       <template #prepend>
         <i class="fi fi-sr-bell"></i>
       </template>
