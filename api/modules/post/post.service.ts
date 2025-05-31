@@ -121,6 +121,12 @@ export class PostService {
       .leftJoinAndSelect("response.audio", "response_audio")
       .leftJoinAndSelect("response.files", "response_files")
 
+      .leftJoinAndSelect("response.response", "response_rsp")
+      .leftJoinAndSelect("response_rsp.user", "response_rsp_user")
+      .leftJoinAndSelect("response_rsp_user.photo", "response_rsp_user_photo")
+      .leftJoinAndSelect("response_rsp.audio", "response_rsp_audio")
+      .leftJoinAndSelect("response_rsp.files", "response_rsp_files")
+
       .skip((pagination.page - 1) * pagination.page)
       .take(pagination.page)
       .orderBy("post.createdAt", "DESC");
