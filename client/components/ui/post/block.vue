@@ -11,6 +11,7 @@ const props = defineProps({
   post: { type: Object as PropType<IPost>, required: true },
   showResponse: { type: Boolean, default: false },
   showRipple: { type: Boolean, default: false },
+  isIn: { type: Boolean, default: false },
 });
 
 const _swiper = ref<SwiperClass>();
@@ -58,7 +59,7 @@ const emit = defineEmits<(e: "removed") => void>();
       <v-spacer />
 
       <ui-user-follow :user="post.user" only-unfollowed />
-      <ui-post-remove :post="post" @removed="emit('removed')" />
+      <ui-post-remove v-if="!isIn" :post="post" @removed="emit('removed')" />
     </div>
 
     <ui-post-text v-if="post.text" :post="post" />
@@ -162,7 +163,7 @@ const emit = defineEmits<(e: "removed") => void>();
           </div>
         </router-link>
         <div class="border pa-0" style="border-radius: 0.9em; z-index: 2">
-          <ui-post-block :post="post.response" show-ripple />
+          <ui-post-block :post="post.response" show-ripple is-in />
         </div>
       </div>
     </template>
