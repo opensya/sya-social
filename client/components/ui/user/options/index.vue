@@ -44,7 +44,8 @@ async function logout() {
     <v-btn
       v-if="user.id === Store.session.user?.id"
       color="dark"
-      variant="tonal"
+      variant="text"
+      size="large"
       rounded
       :to="
         $localePath({
@@ -62,7 +63,8 @@ async function logout() {
     <v-btn
       v-if="user.id === Store.session.user?.id"
       color="dark"
-      variant="tonal"
+      variant="text"
+      size="large"
       rounded
       :to="
         $localePath({
@@ -79,7 +81,8 @@ async function logout() {
 
     <v-btn
       color="dark"
-      variant="tonal"
+      variant="text"
+      size="large"
       rounded
       :to="
         $localePath({
@@ -92,6 +95,24 @@ async function logout() {
         <i class="fi fi-sr-users"></i>
       </template>
       {{ Lodash.capitalize($t("words.following", 2)) }}
+    </v-btn>
+
+    <v-btn
+      color="dark"
+      variant="text"
+      size="large"
+      rounded
+      :to="
+        $localePath({
+          name: '@username-follow',
+          params: { username: user.username },
+        })
+      "
+    >
+      <template #prepend>
+        <i class="fi fi-sr-bell"></i>
+      </template>
+      {{ Lodash.capitalize($t("words.notification", 2)) }}
     </v-btn>
 
     <!-- <v-btn
