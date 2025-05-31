@@ -243,17 +243,9 @@ export class PostService {
       }
     }
 
-    // if (!lodash.isArray(post.files) && !lodash.isUndefined(post.files)) {
-    //   throw new BadRequestException("post_file_invalid");
-    // }
-
-    // if (Array.isArray(params.files)) {
-    //   for (const file of params.files) {
-    //     if (!Fyle.isValid(file, { accept: ["image/png", "image/jpg"] })) {
-    //       throw new BadRequestException("post_file_invalid");
-    //     }
-    //   }
-    // }
+    if (!params.text && !params.audio && !params.files?.length) {
+      throw new BadRequestException("post_require_content");
+    }
 
     if (this.request.body.response) {
       const _post = await this.dataSource
@@ -267,14 +259,6 @@ export class PostService {
       if (!_post) throw new NotFoundException("post_not_found");
       post.response = _post;
     }
-
-    // if (!lodash.isString(post.text) && !lodash.isUndefined(post.text)) {
-    //   throw new BadRequestException("post_text_not_valid");
-    // }
-
-    // if (!lodash.isArray(post.files) && !post.text) {
-    //   throw new BadRequestException("post_text_is_required");
-    // }
 
     await this.dataSource.manager.save(post);
 
