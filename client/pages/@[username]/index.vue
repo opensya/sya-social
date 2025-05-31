@@ -191,5 +191,5 @@ async function getUser() {
     </div>
   </div>
 
-  <!-- <ui-post-list :filter="{ user: user.id }" /> -->
+  <ui-post-list :filter="{ user: user.id }" />
 </template>
