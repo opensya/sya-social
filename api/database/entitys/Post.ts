@@ -48,7 +48,9 @@ export class Post extends Base {
   @Column({ type: "boolean", default: false })
   repost: boolean;
 
+  @Column({ type: "json", default: [] })
+  hashtags: string[];
+
   nResponse: number;
   nRepost: number;
-  hashtags: string[];
 }

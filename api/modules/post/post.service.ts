@@ -151,11 +151,15 @@ export class PostService {
       queryBuilder.andWhere(`user.id IN (${follows.join(",")})`);
     }
 
-    // if (typeof this.request.query.hashtag === "string") {
-    //   const hashtag = this.request.query.hashtag.replaceAll("#", "");
-    //   searchParams.facets.push(`hashtags = ${hashtag.toLowerCase()}`);
-    //   // searchFilters.push(`text includes '#${hashtag}'`);
-    // }
+    if (typeof this.request.query.hashtag === "string") {
+      const hashtag = this.request.query.hashtag
+        .replaceAll("#", "")
+        .toLowerCase();
+
+      queryBuilder.andWhere(
+        `(post.hashtags)::jsonb @> '["${hashtag}"]'::jsonb`,
+      );
+    }
 
     // searchParams.filter = searchFilters.join(" AND ");
     searchParams.page = pagination.page;
@@ -262,6 +266,21 @@ export class PostService {
       post.response = _post;
     }
 
+    function extraireHashtags(text: string) {
+      const regex = /#[\p{L}\p{N}_]{0,}/gu;
+      const hashtags = [];
+      let match: RegExpExecArray;
+
+      while ((match = regex.exec(text)) !== null) {
+        if (match[0]) {
+          hashtags.push(match[0].replace("#", "").toLowerCase());
+        }
+      }
+      return hashtags;
+    }
+
+    if (post.text) post.hashtags = extraireHashtags(post.text);
+
     await this.dataSource.manager.save(post);
 
     const fill = (await this.fill([post]))[0];
@@ -300,20 +319,6 @@ export class PostService {
   }
 
   private async saveInMeili(post: Post) {
-    function extraireHashtags(text: string) {
-      const regex = /#[\p{L}\p{N}_]+/gu;
-      const hashtags = [];
-      let match: RegExpExecArray;
-
-      while ((match = regex.exec(text)) !== null) {
-        if (match[0]) {
-          hashtags.push(match[0].replace("#", "").toLowerCase());
-        }
-      }
-      return hashtags;
-    }
-
-    post.hashtags = extraireHashtags(post.text);
     delete post.audio;
     delete post.files;
     delete post.user.photo;
