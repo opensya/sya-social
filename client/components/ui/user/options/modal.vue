@@ -18,7 +18,16 @@ const props = defineProps({
   >
     <!-- v-if="$vuetify.display.smAndDown"  -->
     <template #activator="{ props }">
-      <v-btn v-bind="props" icon variant="text" color="dark" size="x-small">
+      <slot name="activator" :props="props"></slot>
+
+      <v-btn
+        v-if="!$slots.activator"
+        v-bind="props"
+        icon
+        variant="text"
+        color="dark"
+        size="x-small"
+      >
         <i class="fi fi-br-menu-dots-vertical" style="font-size: 16px"></i>
       </v-btn>
     </template>
