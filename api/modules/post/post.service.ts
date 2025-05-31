@@ -310,7 +310,7 @@ export class PostService {
       .getRepository(Post)
       .createQueryBuilder("post")
       .leftJoinAndSelect("post.user", "user")
-      .leftJoinAndSelect("post.reponse", "reponse")
+      .leftJoinAndSelect("post.response", "response")
       .andWhere(`post.id = '${this.request.body.response}'`)
       .getOne();
 
@@ -421,6 +421,10 @@ export class PostService {
     const responses = await Meili.index<Post>("posts").getDocuments({
       filter: [`response.id = '${this.request.params.id}'`],
     });
+
+    await this.dataSource.query(
+      'DELETE FROM post WHERE repost = TRUE AND "responseId" IS NULL;',
+    );
 
     // enlver la réponse
     for (let i = 0; i < responses.results.length; i++) {
