@@ -135,7 +135,7 @@ const emit = defineEmits<(e: "removed") => void>();
       </div> -->
     </div>
 
-    <template v-if="post.response && showResponse">
+    <template v-if="post.response && (showResponse || post.repost)">
       <div>
         <router-link
           :to="
@@ -143,9 +143,17 @@ const emit = defineEmits<(e: "removed") => void>();
           "
           class="d-flex align-center ga-2 text-body-2 px-5 mb-2"
         >
-          <i class="fi fi-sr-quote-right" style="font-size: 20px"></i>
+          <i
+            class="fi"
+            :class="[
+              post.repost ? 'fi-sr-arrows-retweet' : 'fi-sr-quote-right',
+            ]"
+            style="font-size: 20px"
+          ></i>
           <div>
-            {{ $t("words.inResponsTo") }}
+            <span v-if="!post.repost">
+              {{ $t("words.inResponsTo") }}
+            </span>
             {{ post.response.user.name }}
           </div>
         </router-link>

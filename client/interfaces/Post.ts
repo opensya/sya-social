@@ -10,12 +10,15 @@ export interface IPost {
   text: string;
   audio: IFile;
   files: IFile[];
-  createdAt: string;
-  updatedAt: string;
 
   response?: IPost;
+  repost: boolean;
+
   nResponse: number;
   nRepost: number;
+
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IHastag {

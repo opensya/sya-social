@@ -15,8 +15,9 @@ import { SearchParams } from "meilisearch";
 import { IFile, IHastag } from "interfaces";
 import dayjs from "dayjs";
 import { v4 as uuid } from "uuid";
-import lodash from "lodash";
+import lodash, { orderBy, take } from "lodash";
 import { Attachment } from "database/entitys/Attachment";
+import { skip } from "rxjs";
 
 @Injectable()
 export class PostService {
@@ -103,15 +104,34 @@ export class PostService {
       pageSize: parseInt((this.request.query.pageSize ?? 20).toString()),
     };
 
+    const queryBuilder = this.dataSource
+      .getRepository(Post)
+      .createQueryBuilder("post")
+
+      .leftJoinAndSelect("post.user", "user")
+      .leftJoinAndSelect("user.photo", "photo")
+
+      .leftJoinAndSelect("post.audio", "audio")
+      .leftJoinAndSelect("post.files", "files")
+
+      .leftJoinAndSelect("post.response", "response")
+      .leftJoinAndSelect("response.user", "response_user")
+      .leftJoinAndSelect("response.audio", "response_audio")
+      .leftJoinAndSelect("response.files", "response_files")
+
+      .skip((pagination.page - 1) * pagination.page)
+      .take(pagination.page)
+      .orderBy("post.createdAt", "DESC");
+
     const searchFilters: string[] = [];
     const searchParams: SearchParams = { sort: ["createdAt:desc"], facets: [] };
 
     if (typeof this.request.query.user === "string") {
-      searchFilters.push(`user.id = ${this.request.query.user}`);
+      queryBuilder.andWhere(`user.id = '${this.request.query.user}'`);
     }
 
     if (typeof this.request.query.responseTo === "string") {
-      searchFilters.push(`response.id = ${this.request.query.responseTo}`);
+      queryBuilder.andWhere(`response.id = '${this.request.query.responseTo}'`);
     }
 
     if (this.request.query.follow) {
@@ -126,7 +146,7 @@ export class PostService {
       ).map((follow) => `'${follow.follow.id}'`);
       follows.push(`'${user.id}'`);
 
-      searchFilters.push(`user.id IN [${follows.join(",")}]`);
+      queryBuilder.andWhere(`user.id IN (${follows.join(",")})`);
     }
 
     // if (typeof this.request.query.hashtag === "string") {
@@ -135,46 +155,31 @@ export class PostService {
     //   // searchFilters.push(`text includes '#${hashtag}'`);
     // }
 
-    searchParams.filter = searchFilters.join(" AND ");
+    // searchParams.filter = searchFilters.join(" AND ");
     searchParams.page = pagination.page;
     searchParams.hitsPerPage = pagination.pageSize;
+    searchParams.sort = ["createdAt:desc"];
 
-    const result = await Meili.index("posts").search<Post>(
-      (this.request.query.q as string) ?? null,
-      searchParams,
-    );
+    // const result = await Meili.index("posts").search<Post>(
+    //   (this.request.query.q as string) ?? null,
+    //   searchParams,
+    // );
 
-    let posts: Post[] = [];
+    // if (result.hits.length) {
+    //   queryBuilder
+    //     .andWhere(
+    //       `post.id IN (${result.hits.map((post) => `'${post.id}'`).join(",")})`,
+    //     )
+    //     .orderBy("post.createdAt", "DESC");
+    // }
 
-    if (result.hits.length) {
-      const queryBuilder = this.dataSource
-        .getRepository(Post)
-        .createQueryBuilder("post")
-
-        .leftJoinAndSelect("post.user", "user")
-        .leftJoinAndSelect("user.photo", "photo")
-
-        .leftJoinAndSelect("post.audio", "audio")
-        .leftJoinAndSelect("post.files", "files")
-
-        .leftJoinAndSelect("post.response", "response")
-        .leftJoinAndSelect("response.user", "response_user")
-        .leftJoinAndSelect("response.audio", "response_audio")
-        .leftJoinAndSelect("response.files", "response_files")
-
-        .andWhere(
-          `post.id IN (${result.hits.map((post) => `'${post.id}'`).join(",")})`,
-        )
-        .orderBy("post.createdAt", "DESC");
-
-      posts = await queryBuilder.getMany();
-    }
+    const [posts, total] = await queryBuilder.getManyAndCount();
 
     return {
       ...pagination,
       data: await this.fill(posts),
-      total: result.totalHits,
-      totalPages: result.totalPages,
+      total,
+      totalPages: Math.ceil(total / pagination.pageSize),
     };
   }
 
@@ -280,15 +285,11 @@ export class PostService {
   }
 
   async repost() {
-    const params = this.request.body as {
-      text: string;
-      files: Attachment[];
-      audio: Attachment;
-    };
     const user = this.request.session.user as User;
 
     const post = new Post();
     post.user = user;
+    post.repost = true;
 
     if (!this.request.body.response) {
       throw new NotFoundException("post_not_found");

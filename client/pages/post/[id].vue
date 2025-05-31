@@ -90,6 +90,7 @@ async function getPost() {
 
           <v-spacer />
 
+          <ui-post-repost :post="post" />
           <ui-post-share :post="post" />
         </div>
 
