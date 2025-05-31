@@ -41,7 +41,7 @@ function load() {
   const input = document.createElement("input");
   input.multiple = true;
   input.setAttribute("type", "file");
-  input.setAttribute("accept", "image/png, image/jpeg");
+  input.setAttribute("accept", "image/png, image/jpg");
 
   function readFile() {
     const _files = input.files;
