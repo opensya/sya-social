@@ -201,9 +201,13 @@ export class PostService {
     for (let i = 0; i < posts.length; i++) {
       delete posts[i].user.password;
       delete posts[i].response?.user.password;
+      delete posts[i].response?.response?.user.password;
 
       delete posts[i].response?.shareID;
       if (user?.id !== posts[i].user.id) delete posts[i].shareID;
+
+      delete posts[i].response?.shareID;
+      delete posts[i].response?.response?.shareID;
 
       const reposnes = await this.dataSource
         .getRepository(Post)
