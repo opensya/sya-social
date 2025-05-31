@@ -25,7 +25,10 @@ async function submit() {
       text: createVNode(
         "div",
         { class: "d-flex flex-colum align-center ga-2" },
-        [Use.i18n.t("success.post_repost")]
+        [
+          createVNode("i", { class: "fi fi-sr-check-circle text-success" }),
+          Use.i18n.t("success.post_repost"),
+        ]
       ),
     });
   } finally {
