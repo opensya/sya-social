@@ -304,11 +304,14 @@ export class PostService {
       .getRepository(Post)
       .createQueryBuilder("post")
       .leftJoinAndSelect("post.user", "user")
+      .leftJoinAndSelect("post.reponse", "reponse")
       .andWhere(`post.id = '${this.request.body.response}'`)
       .getOne();
 
     if (!_post) throw new NotFoundException("post_not_found");
     post.response = _post;
+
+    if (_post.repost) post.response = _post.response;
 
     await this.dataSource.manager.save(post);
 

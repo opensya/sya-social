@@ -18,7 +18,9 @@ async function submit() {
     const _post = await Api.request<IPost>({
       url: `post/repost`,
       method: "post",
-      body: { response: props.post.id },
+      body: {
+        response: props.post.repost ? props.post.response?.id : props.post.id,
+      },
     });
 
     Notify.push({
