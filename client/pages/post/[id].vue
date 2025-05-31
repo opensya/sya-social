@@ -75,7 +75,11 @@ async function getPost() {
         </div>
 
         <div class="mt-5">
-          <ui-post-block :post="post"> </ui-post-block>
+          <ui-post-block
+            :post="post"
+            @removed="$router.replace({ name: 'index' })"
+          >
+          </ui-post-block>
         </div>
 
         <div class="px-5 py-3 d-flex align-center ga-2">

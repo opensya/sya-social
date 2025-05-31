@@ -4,6 +4,7 @@ import type { IPost } from "~/interfaces/Post";
 const props = defineProps({
   post: { type: Object as PropType<IPost>, required: true },
 });
+const emit = defineEmits<(e: "removed") => void>();
 </script>
 
 <template>
@@ -42,7 +43,7 @@ const props = defineProps({
       </div>
 
       <div class="mt-5">
-        <ui-post-block :post="post"> </ui-post-block>
+        <ui-post-block :post="post" @removed="emit('removed')"> </ui-post-block>
       </div>
 
       <div class="px-5 py-3 d-flex align-center ga-2">

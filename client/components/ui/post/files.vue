@@ -132,11 +132,13 @@ function goBack() {
         </swiper-slide>
       </swiper>
 
-      <div
-        v-if="$vuetify.display.mdAndUp"
-        style="max-width: 442px; height: 100%; overflow-y: auto"
-      >
-        <ui-post-page :post="post" />
+      <div class="h-100">
+        <div
+          v-if="$vuetify.display.mdAndUp"
+          style="width: 442px; height: 100%; overflow-y: auto"
+        >
+          <ui-post-page :post="post" @removed="goBack" />
+        </div>
       </div>
     </div>
     <!-- </v-card> -->
