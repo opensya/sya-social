@@ -20,30 +20,50 @@ async function logout() {
 
 <template>
   <div class="ui-user-options d-flex flex-column ga-2 align-start">
-    <div class="d-flex align-center w-100">
-      <router-link
-        :to="
-          $localePath({
-            name: '@username',
-            params: { username: user.username },
-          })
-        "
-        class="d-flex align-center ga-2 text-dark"
-      >
-        <ui-user-avatar :user="user" size="54" />
+    <router-link
+      :to="
+        $localePath({
+          name: '@username',
+          params: { username: user.username },
+        })
+      "
+      class="d-flex align-center ga-2 text-dark"
+    >
+      <ui-user-avatar :user="user" size="54" />
 
-        <div style="line-height: 1">
-          {{ user.name }}
-          <div class="text-body-2 text-primary">@{{ user.username }}</div>
-        </div>
-      </router-link>
-
-      <v-spacer />
-
-      <ui-user-follow :user="user" />
-    </div>
+      <div style="line-height: 1">
+        {{ user.name }}
+        <div class="text-body-2 text-primary">@{{ user.username }}</div>
+      </div>
+    </router-link>
 
     <div class="mb-5"></div>
+
+    <ui-user-follow :user="user" />
+
+    <v-btn
+      color="dark"
+      variant="text"
+      size="large"
+      rounded
+      :to="$localePath({ name: 'index' })"
+    >
+      <template #prepend>
+        <ui-svg name="home" size="20" />
+      </template>
+      {{ Lodash.capitalize($t("words.home")) }}
+    </v-btn>
+
+    <v-btn color="dark" variant="text" size="large" rounded>
+      <template #prepend>
+        <i class="fi fi-br-waveform-path" style="font-size: 22px"></i>
+      </template>
+      Flow
+
+      <template #append>
+        <v-chip size="x-small"> soon </v-chip>
+      </template>
+    </v-btn>
 
     <v-btn
       v-if="user.id === Store.session.user?.id"
@@ -100,6 +120,36 @@ async function logout() {
       </template>
       {{ Lodash.capitalize($t("words.following", 2)) }}
     </v-btn>
+
+    <v-btn color="dark" variant="text" size="large" rounded>
+      <template #prepend>
+        <i class="fi fi-sr-bell"></i>
+      </template>
+      {{ Lodash.capitalize($t("words.notification", 2)) }}
+    </v-btn>
+
+    <v-btn color="dark" variant="text" size="large" rounded>
+      <template #prepend>
+        <i class="fi fi-sr-bookmark"></i>
+      </template>
+      {{ Lodash.capitalize($t("words.bookmark", 2)) }}
+    </v-btn>
+
+    <!-- <v-btn
+      v-if="user.id === Store.session.user?.id"
+      color="dark"
+      variant="tonal"
+      rounded
+      @click="logout"
+    >
+      <template #prepend>
+        <i class="fi fi-rr-arrow-left-from-arc text-red"></i>
+      </template>
+      <span class="text-red">
+        {{ Lodash.capitalize($t("words.tologout")) }}
+      </span>
+    </v-btn> -->
+
     <template v-if="user.id === Store.session.user?.id">
       <div class="mt-16"></div>
 
@@ -118,9 +168,15 @@ async function logout() {
         <router-link class="text-red" :to="$localePath({ name: 'logout' })">
           {{ Lodash.capitalize($t("words.tologout")) }}
         </router-link>
+
+        <!-- <a> Mentions légales </a>
+        <a> Politique de confidentialité </a>
+        <a> Conditions d'utilisations </a> -->
       </div>
     </template>
   </div>
+
+  <!-- <ui-loading-page v-if="logouting" /> -->
 </template>
 
 <style lang="scss">

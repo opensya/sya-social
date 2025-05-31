@@ -50,7 +50,9 @@
     "todownload": "télécharger",
     "integrate": "intégrer",
     "yourBio": "bio",
-    "notification": "notification | notifications"
+    "notification": "notification | notifications",
+    "home": "accueil",
+    "bookmark": "signet | signets"
   },
 
   "user": {

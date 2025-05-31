@@ -13,7 +13,7 @@ defineProps({
           <div class="ui-block__left mr-5 ml-10" style="">
             <slot v-if="$slots.left" name="left" />
             <template v-else>
-              <ui-user-options
+              <ui-block-options
                 v-if="Store.session.user"
                 :user="Store.session.user"
               />
@@ -32,7 +32,7 @@ defineProps({
           <slot />
         </div>
 
-        <ui-block-bottom v-if="!$slots.bottom && Store.session.user" />
+        <ui-block-bottom v-if="!$slots.bottom" />
         <slot name="bottom"> </slot>
       </div>
       <div v-if="$vuetify.display.mdAndUp" class="line"></div>
