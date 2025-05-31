@@ -268,12 +268,14 @@ export class UserService {
       name: string;
       username: string;
       photo: Attachment;
+      bio: string;
       preferencies: any;
     };
     const user = this.request.session.user as User;
 
     user.name = params.name;
     user.username = params.username;
+    user.bio = params.bio;
     user.preferencies = params.preferencies;
 
     if (params.photo && !params.photo.id) {

@@ -10,6 +10,7 @@ import { Base } from "./Base";
 import { Session } from "./Session";
 import {
   IsEmail,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
@@ -29,8 +30,14 @@ export const regexPaswword =
 @Entity()
 export class User extends Base {
   @IsEmail({}, { message: "user_email_is_not_valid" })
-  @Column({ type: "varchar", unique: true })
+  @Column({ type: "varchar", unique: true, nullable: true })
   email: string;
+
+  @IsOptional()
+  @IsString({ message: "user_bio_is_not_valid" })
+  @MaxLength(250, { message: "user_bio_is_not_valid" })
+  @Column({ type: "text", nullable: true })
+  bio: string;
 
   @ManyToOne(() => Attachment, (audio) => audio.userPhotos, {
     nullable: true,

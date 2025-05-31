@@ -6,6 +6,7 @@ export interface IUser {
   updatedAt: string;
   username: string;
   name: string;
+  bio: string;
   photo?: IFile;
 
   preferencies: { lang: string; mode: "light" | "dark" | null };

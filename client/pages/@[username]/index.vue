@@ -69,7 +69,7 @@ async function getUser() {
   <div
     style="
       background-color: rgba(var(--v-theme-on-background), 0.03);
-      height: 210px;
+      min-height: 210px;
       display: flex;
       flex-direction: column;
     "
@@ -110,6 +110,21 @@ async function getUser() {
 
       <ui-user-options-modal :user="user" />
     </div>
+
+    <div
+      v-if="user.bio"
+      class="mt-5"
+      style="
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limite le texte à 5 lignes */
+        line-clamp: 2; /* Limite le texte à 5 lignes */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      "
+      v-html="user.bio"
+    ></div>
+
     <div class="mt-2 px-1 text-body-2">
       <div v-if="loading">
         <div

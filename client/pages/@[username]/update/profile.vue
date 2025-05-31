@@ -157,6 +157,16 @@ async function submit() {
         v-model="data.name"
       ></v-text-field>
 
+      <v-textarea
+        :label="Lodash.capitalize($t('words.yourBio'))"
+        :rules="[
+          (v: string) => (v?.length > 250 ? Lodash.capitalize($t('user.bio.max')) : true),
+        ]"
+        variant="filled"
+        v-model="data.bio"
+        no-resize
+      ></v-textarea>
+
       <v-btn
         variant="flat"
         color="primary"

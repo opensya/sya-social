@@ -48,13 +48,17 @@
     "copyLink": "copier le lien",
     "toshare": "partager",
     "todownload": "télécharger",
-    "integrate": "intégrer"
+    "integrate": "intégrer",
+    "yourBio": "bio"
   },
 
   "user": {
     "name": {
       "min": "02 caractères au minimum",
       "max": "50 caractères au minimum"
+    },
+    "bio": {
+      "max": "250 caractères au minimum"
     }
   },
   "post": {
