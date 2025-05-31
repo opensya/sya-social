@@ -113,10 +113,6 @@ async function logout() {
       <div class="mt-16"></div>
 
       <div class="mt-auto d-flex flex-column">
-        <router-link class="text-red" :to="$localePath({ name: 'logout' })">
-          {{ Lodash.capitalize($t("words.tologout")) }}
-        </router-link>
-
         <router-link
           :to="
             $localePath({
@@ -128,9 +124,13 @@ async function logout() {
           {{ Lodash.capitalize($t("words.preferencies")) }}
         </router-link>
 
-        <a> Mentions légales </a>
+        <router-link class="text-red" :to="$localePath({ name: 'logout' })">
+          {{ Lodash.capitalize($t("words.tologout")) }}
+        </router-link>
+
+        <!-- <a> Mentions légales </a>
         <a> Politique de confidentialité </a>
-        <a> Conditions d'utilisations </a>
+        <a> Conditions d'utilisations </a> -->
       </div>
     </template>
   </div>
