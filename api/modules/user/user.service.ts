@@ -272,12 +272,11 @@ export class UserService {
     };
     const user = this.request.session.user as User;
 
-    user.photo = params.photo ?? null;
     user.name = params.name;
     user.username = params.username;
     user.preferencies = params.preferencies;
 
-    if (params.photo) {
+    if (params.photo && !params.photo.id) {
       user.photo = this.dataSource
         .getRepository(Attachment)
         .create(params.photo);
@@ -287,14 +286,13 @@ export class UserService {
     const u = await this.dataSource
       .getRepository(User)
       .createQueryBuilder("user")
-      .leftJoinAndSelect("user.photo", "photo")
       .andWhere(`username = '${params.username}'`)
-      .andWhere(`id != '${user.id}'`)
+      .andWhere(`user.id != '${user.id}'`)
       .getOne();
 
     if (u) throw new BadRequestException("username_is_already_taken");
 
-    await user.save();
+    await this.dataSource.manager.save(user);
 
     delete user.password;
     await Meili.index("users").addDocuments([user]);
