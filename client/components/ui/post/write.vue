@@ -141,10 +141,7 @@ async function submit() {
               color: "primary",
               rounded: true,
               onClick() {
-                Use.router.push({
-                  name: "post",
-                  params: { id: _post.id },
-                });
+                Use.router.push({ name: "post-id", params: { id: _post.id } });
               },
             },
             Lodash.capitalize(Use.i18n.t("words.seePost"))

@@ -76,9 +76,9 @@ const emit = defineEmits<(e: "removed") => void>();
         :slidesPerView="'auto'"
         :grabCursor="true"
         :modules="[]"
-        @init="(s) => (_swiper = s)"
         class="w-100"
         style="padding-left: 20px; padding-right: 20px"
+        @init="(s) => (_swiper = s)"
       >
         <swiper-slide
           v-for="(file, f) in post.files"
@@ -95,7 +95,11 @@ const emit = defineEmits<(e: "removed") => void>();
           <div :class="{ 'pr-2': post.files.length >= 2 }">
             <v-card
               variant="flat"
-              @click=""
+              @click="
+                Modal.push({
+                  'post-files': JSON.stringify({ id: post.id, index: f }),
+                })
+              "
               style="border-radius: 0.9em; position: relative"
             >
               <img
