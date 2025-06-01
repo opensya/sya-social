@@ -96,7 +96,7 @@
           size="large"
           icon
         >
-          <ui-svg name="mic" size="24" />
+          <ui-svg name="char-2" size="24" />
         </v-fab>
       </template>
 
