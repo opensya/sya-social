@@ -75,7 +75,7 @@ export class SessionService {
 
     const user = new User();
     user.username = params.username;
-    user.email = params.email ?? null;
+    user.email = params.email || null;
     user.name = params.name;
     user.password = { plain: params.password };
 

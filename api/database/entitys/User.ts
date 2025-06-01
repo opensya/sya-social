@@ -23,9 +23,7 @@ import { Follow } from "./Follow";
 import { Post } from "./Post";
 import { IFile } from "interfaces";
 import { Attachment } from "./Attachment";
-
-export const regexPaswword =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?`~\-])[A-Za-z\d!@#$%^&*()_+\[\]{};':"\\|,.<>/?`~\-]{8,}$/;
+import { isValidPassword } from "utils/password";
 
 @Entity()
 export class User extends Base {
@@ -76,7 +74,7 @@ export class User extends Base {
 
   hashPassword() {
     if (this.password && "plain" in this.password) {
-      if (!regexPaswword.test(this.password.plain)) {
+      if (!isValidPassword(this.password.plain)) {
         throw new BadRequestException("user_password_not_valid");
       }
 
