@@ -45,6 +45,7 @@ interface IEnv {
       await buildEnvFile(tempDir, env);
       await createNetwork(env);
       await buildDockerFile(tempDir, env);
+      await removeTemPFolder(tempDir);
     } catch (error) {
       console.log(error);
     }
@@ -129,6 +130,10 @@ interface IEnv {
       cwd: join(tempDir, "client"),
       onStdout: (out) => console.log(out),
     });
+  }
+
+  async function removeTemPFolder(tempDir: string) {
+    if (existsSync(tempDir)) await runCmd(`rm -r -f ${tempDir}`);
   }
 
   async function runCmd(
