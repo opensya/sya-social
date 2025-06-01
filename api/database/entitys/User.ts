@@ -29,6 +29,7 @@ export const regexPaswword =
 
 @Entity()
 export class User extends Base {
+  @IsOptional()
   @IsEmail({}, { message: "user_email_is_not_valid" })
   @Column({ type: "varchar", unique: true, nullable: true })
   email: string;
