@@ -213,3 +213,5 @@ interface IEnv {
     return stdout.trim();
   }
 })();
+
+// sudo env "PATH=$PATH" bun run index.ts
